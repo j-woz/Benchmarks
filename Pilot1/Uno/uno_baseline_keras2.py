@@ -115,7 +115,8 @@ class MultiGPUCheckpoint(ModelCheckpoint):
 def build_feature_model(input_shape, name='', dense_layers=[1000, 1000],
                         kernel_initializer='glorot_normal',
                         activation='relu', residual=False,
-                        dropout_rate=0, permanent_dropout=True):
+                        dropout_rate=0, permanent_dropout=True,
+                        layer_force=None):
     x_input = Input(shape=input_shape)
     h = x_input
     for i, layer in enumerate(dense_layers):
@@ -170,7 +171,8 @@ def build_model(loader, args, permanent_dropout=True, silent=False):
             box = build_feature_model(input_shape=shape, name=fea_type,
                                       dense_layers=dense_feature_layers,
                                       kernel_initializer=kernel_initializer,
-                                      dropout_rate=dropout_rate, permanent_dropout=permanent_dropout)
+                                      dropout_rate=dropout_rate,
+                                      permanent_dropout=permanent_dropout)
             if not silent:
                 logger.debug('Feature encoding submodel for %s:', fea_type)
                 box.summary(print_fn=logger.debug)
@@ -194,6 +196,7 @@ def build_model(loader, args, permanent_dropout=True, silent=False):
     h = merged
     for i, layer in enumerate(args.dense):
         x = h
+        if args.layer_force is not None: layer = args.layer_force
         h = Dense(layer, activation=args.activation, kernel_initializer=kernel_initializer)(h)
         if dropout_rate > 0:
             if permanent_dropout:
@@ -443,7 +446,7 @@ def run(params):
             val_gen = DataFeeder(partition='val', filename=args.use_exported_data, batch_size=args.batch_size, shuffle=args.shuffle, single=args.single, agg_dose=args.agg_dose, on_memory=args.on_memory_loader)
             test_gen = DataFeeder(partition='test', filename=args.use_exported_data, batch_size=args.batch_size, shuffle=args.shuffle, single=args.single, agg_dose=args.agg_dose, on_memory=args.on_memory_loader)
         else:
-            train_gen = CombinedDataGenerator(loader, fold=fold, batch_size=args.batch_size, shuffle=args.shuffle, single=args.single)
+            train_gen = CombinedDataGenerator(loader, fold=fold, batch_size=args.batch_size, shuffle=args.shuffle, single=args.single, noise=args.noise)
             val_gen = CombinedDataGenerator(loader, partition='val', fold=fold, batch_size=args.batch_size, shuffle=args.shuffle, single=args.single)
             test_gen = CombinedDataGenerator(loader, partition='test', fold=fold, batch_size=args.batch_size, shuffle=args.shuffle, single=args.single)
 

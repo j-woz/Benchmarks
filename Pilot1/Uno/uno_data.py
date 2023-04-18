@@ -211,8 +211,8 @@ def load_combo_dose_response(fraction=True):
                 "SCREENER": str,
                 "STUDY": str,
             },
-            error_bad_lines=False,
-            warn_bad_lines=True,
+            # error_bad_lines=False,
+            # warn_bad_lines=True,
         )
         global_cache[path] = df
 
@@ -1543,6 +1543,7 @@ class CombinedDataGenerator(keras.utils.Sequence):
         single=False,
         rank=0,
         total_ranks=1,
+        noise = 0
     ):
         self.data = data
         self.partition = partition
@@ -1576,6 +1577,7 @@ class CombinedDataGenerator(keras.utils.Sequence):
                 partition, rank, self.size, self.batch_size, self.steps
             )
         )
+        self.noise = noise
 
     def __len__(self):
         return self.steps
@@ -1585,6 +1587,13 @@ class CombinedDataGenerator(keras.utils.Sequence):
         x_list, y = self.get_slice(
             self.batch_size, single=self.single, partial_index=shard
         )
+        # print("noise " + str(self.noise))
+        # print("x_list: " + str(x_list))
+        # print("y0: " + str(y))
+        m = np.mean(y)
+        y = y + np.random.normal(0, self.noise * m / 100.0, len(y))
+        # print("y1: " + str(y))
+        # exit()
         return x_list, y
 
     def reset(self):

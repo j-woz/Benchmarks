@@ -313,6 +313,18 @@ additional_definitions = [
         "default": None,
         "help": "name of file to save weights to",
     },
+    {
+        "name": "noise",
+        "type": float,
+        "default": 0,
+        "help": "noise scale",
+    },
+    {
+        "name": "layer_force",
+        "type": int,
+        "default": 1000,
+        "help": "force layer size",
+    },
 ]
 
 required = [
