@@ -42,6 +42,15 @@ echo "using CUDA_VISIBLE_DEVICES ${CUDA_VISIBLE_DEVICES}"
 echo "using CANDLE_DATA_DIR ${CANDLE_DATA_DIR}"
 echo "using CANDLE_CONFIG ${CANDLE_CONFIG}"
 
+log_path()
+# Pretty print a colon-separated variable
+{
+  echo ${1}:
+  eval echo \$$1 | tr : '\n' | nl
+}
+
+log_path PYTHONPATH
+
 echo "train.sh: running command..."
 echo "CMD = ${CMD[@]}"
 echo
