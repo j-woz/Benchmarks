@@ -31,9 +31,9 @@ elif (( $ARGC >= 3 )) ; then
   if [[ -f $CANDLE_CONFIG ]] ; then
     echo "Uno/train.sh: found CANDLE_CONFIG=$CANDLE_CONFIG"
     shift
-    CMD=( python -v ${CANDLE_MODEL} --config_file $CANDLE_CONFIG $@ )
+    CMD=( python ${CANDLE_MODEL} --config_file $CANDLE_CONFIG $@ )
   else # simply passthrough $@
-    CMD=( python -v ${CANDLE_MODEL} $@ )
+    CMD=( python ${CANDLE_MODEL} $@ )
   fi
 fi
 
