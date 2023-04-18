@@ -20,7 +20,7 @@ if (( $ARGC < 2 )) ; then
 fi
 
 CUDA_VISIBLE_DEVICES=$1 ; shift
-CANDLE_DATA_DIR=$1 ; shift
+export CANDLE_DATA_DIR=$1 ; shift
 CANDLE_CONFIG=0
 
 if (( $ARGC == 2 )) ; then
@@ -45,6 +45,11 @@ echo "using CANDLE_CONFIG ${CANDLE_CONFIG}"
 echo "train.sh: running command..."
 echo "CMD = ${CMD[@]}"
 echo
+
+set -x
+cd /candle_data_dir
+pwd
+ls
 
 # Set up environmental variables and execute the model!
 if env CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES} \
