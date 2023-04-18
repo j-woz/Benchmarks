@@ -1591,7 +1591,7 @@ class CombinedDataGenerator(keras.utils.Sequence):
         # print("x_list: " + str(x_list))
         # print("y0: " + str(y))
         m = np.mean(y)
-        y = y + np.random.normal(0, self.noise * m / 100.0, len(y))
+        y = y + np.random.normal(0, abs(self.noise * m / 100.0), len(y))
         # print("y1: " + str(y))
         # exit()
         return x_list, y
