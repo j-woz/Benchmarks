@@ -314,6 +314,12 @@ additional_definitions = [
         "help": "name of file to save weights to",
     },
     {
+        "name": "candle_result",
+        "type": str,
+        "default": None,
+        "help": "result value to print for CANDLE or IMPROVE",
+    },
+    {
         "name": "noise",
         "type": float,
         "default": 0,

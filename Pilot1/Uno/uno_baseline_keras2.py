@@ -505,6 +505,10 @@ def run(params):
 
         scores = evaluate_prediction(y_val, y_val_pred)
         log_evaluation(scores, logger)
+        if "candle_result" in params and \
+        params["candle_result"] is not None:
+            candle_result = scores[params["candle_result"]]
+            print("CANDLE_RESULT " + str(candle_result))
 
         # df_val = df_val.assign(PredictedGrowth=y_val_pred, GrowthError=y_val_pred - y_val)
         df_val['Predicted' + target] = y_val_pred
