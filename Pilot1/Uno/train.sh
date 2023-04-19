@@ -56,9 +56,8 @@ echo "CMD = ${CMD[@]}"
 echo
 
 set -x
-cd /candle_data_dir
+cd /candle_data_dir/Uno/Output/$EXPID/$RUNID
 pwd
-ls
 
 # Set up environmental variables and execute the model!
 if env CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES} \
