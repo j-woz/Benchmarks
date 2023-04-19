@@ -52,12 +52,10 @@ log_path()
 log_path PYTHONPATH
 
 echo "train.sh: running command..."
-echo "CMD = ${CMD[@]}"
-echo
+echo "train.sh: CMD = ${CMD[@]}"
 
-set -x
 cd /candle_data_dir/Uno/Output/$EXPID/$RUNID
-pwd
+echo "train.sh: PWD =" $( pwd -P )
 
 # Set up environmental variables and execute the model!
 if env CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES} \
