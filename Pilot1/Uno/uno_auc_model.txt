@@ -1,5 +1,10 @@
 [Global_Params]
 model_name='uno'
+# GDSC - big and slow
+# CTRP - small
+# ALMANAC -
+# gCSI - small
+# NCI60
 train_sources=['CCLE']
 test_sources=['train']
 cell_types=None
@@ -28,7 +33,7 @@ feature_subsample=0
 rng_seed=2018
 no_gen=False
 verbose=False
-
+improve_result='val_loss'
 
 preprocess_rnaseq='source_scale'
 gpus=[0]

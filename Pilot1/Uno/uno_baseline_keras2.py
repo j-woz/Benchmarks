@@ -503,12 +503,26 @@ def run(params):
             print(msg)
             logger.info(msg)
 
+        if len(history.history.keys()) > 0:
+            print("history2: " + str(list(history.history.keys())))
+            print("history2: " + str(list(history.history.keys())))
+            if "improve_result" in params and \
+               params["improve_result"] is not None:
+                improve_result = params["improve_result"]
+            else:
+                improve_result = "val_loss"
+            improve_result = history.history[improve_result][-1]
+            print("IMPROVE_RESULT " + str(improve_result))
+        else:
+            print("IMPROVE_RESULT NaN")
+            logger.info("No results: 0 epochs actually ran.")
+
         scores = evaluate_prediction(y_val, y_val_pred)
         log_evaluation(scores, logger)
-        if "candle_result" in params and \
-        params["candle_result"] is not None:
-            candle_result = scores[params["candle_result"]]
-            print("CANDLE_RESULT " + str(candle_result))
+        # if "candle_result" in params and \
+        # params["candle_result"] is not None:
+        #     candle_result = scores[params["candle_result"]]
+        #     print("CANDLE_RESULT " + str(candle_result))
 
         # df_val = df_val.assign(PredictedGrowth=y_val_pred, GrowthError=y_val_pred - y_val)
         df_val['Predicted' + target] = y_val_pred
