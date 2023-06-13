@@ -157,7 +157,7 @@ def build_model(loader, args, permanent_dropout=True, silent=False):
     dropout_rate = args.dropout
 
     initializer = 'glorot_normal' if hasattr(args, 'initialization') is False else args.initialization
-    kernel_initializer = candle.build_initializer(initializer, candle.keras_default_config(), args.rng_seed)
+    kernel_initializer = candle.build_initializer(initializer, candle.keras_default_config(), int(args.rng_seed))
 
     for fea_type, shape in loader.feature_shapes.items():
         base_type = fea_type.split('.')[0]
@@ -229,7 +229,7 @@ def initialize_parameters(default_model='uno_default_model.txt'):
 
 def run(params):
     args = candle.ArgumentStruct(**params)
-    candle.set_seed(args.rng_seed)
+    candle.set_seed(int(args.rng_seed))
     ext = extension_from_parameters(args)
     candle.verify_path(args.save_path)
     # prefix = args.save_path + ext
@@ -256,7 +256,7 @@ def run(params):
         config.gpu_options.visible_device_list = ",".join(map(str, args.gpus))
         tf.compat.v1.keras.backend.set_session(tf.compat.v1.Session(config=config))
 
-    loader = CombinedDataLoader(seed=args.rng_seed)
+    loader = CombinedDataLoader(seed=int(args.rng_seed))
     loader.load(cache=args.cache,
                 ncols=args.feature_subsample,
                 agg_dose=args.agg_dose,
