@@ -5,6 +5,7 @@ from __future__ import division, print_function
 import logging
 import os
 import time
+from pprint import pprint
 
 import numpy as np
 import pandas as pd
@@ -245,7 +246,8 @@ def run(params):
     # tf.config.set_visible_devices(gpus[0], 'GPU')
     # print(device_lib.list_local_devices())
 
-    logger.info('Params: {}'.format(params))
+    logger.info("Params:")
+    pprint(params)
 
     if (len(args.gpus) > 0):
         import tensorflow as tf
