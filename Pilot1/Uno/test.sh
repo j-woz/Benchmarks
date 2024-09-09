@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+set -eux
 
 # AUC prediction model
 if [ ! -f "$CANDLE_DATA_DIR/Pilot1/Uno/top_21_auc_1fold.uno.h5" ]; then
